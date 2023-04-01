@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Convert Images to WebP</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #ccc;
+      }
+
+      label {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"] {
+        padding: 5px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0 0 5px #ccc;
+        width: 250px;
+      }
+
+      input[type="submit"] {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <form method="POST" action="/">
+      <label for="source-container">Source Container:</label>
+      <input type="text" id="source-container" name="source-container"><br><br>
+      <label for="destination-container">Destination Container:</label>
+      <input type="text" id="destination-container" name="destination-container"><br><br>
+      <input type="submit" value="Convert">
+    </form>
+    <script>
+        $(document).ready(function() {
+          var progressBar = $('#progress-bar');
+          var progressStatus = $('#progress-status');
+        
+          setInterval(function() {
+            $.ajax({
+              url: '/progress',
+              type: 'GET',
+              success: function(data) {
+                var progress = JSON.parse(data);
+                progressBar.width(progress.percent + '%');
+                progressStatus.text(progress.message);
+              }
+            });
+          }, 1000);
+        });
+        </script>
+        
+        <div class="progress">
+          <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+          <span id="progress-status"></span>
+        </div>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+Flask
+azure-identity
+azure-storage-blob
+Pillow
+python-dotenv
