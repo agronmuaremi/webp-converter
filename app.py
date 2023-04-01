@@ -8,7 +8,8 @@ from flask import Flask, render_template, request
 credential = DefaultAzureCredential()
 
 # Create a BlobServiceClient using the DefaultAzureCredential
-blob_service_client = BlobServiceClient(account_url="https://agronmuaremicomsa.blob.core.windows.net/", credential=credential)
+account_url = os.environ.get("STORAGE_ACCOUNT_URL")
+blob_service_client = BlobServiceClient(account_url=account_url, credential=credential)
 
 # Define the conversion function
 def convert_to_webp(blob_client):
